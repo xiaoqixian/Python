@@ -15,7 +15,14 @@ Including another URLconf
 """
 from django.conf.urls import url
 from django.urls import path
+from django.contrib import admin
 
-from . import views
+from . import views,testdb
 
-urlpatterns = [path('index/', views.index)] #views.index是一个函数，当浏览器路径为index时，就调用这个函数，并传入一个request类型的变量。
+urlpatterns = [path('index/', views.index),path('testdb/', testdb.testdb)]
+
+urlpatterns = [
+    path('index/', views.index),
+    path('testdb/', testdb.testdb),
+    path('lunar/', admin.site.urls),
+]
