@@ -2,13 +2,25 @@
 
 class TestMetaClass(type):
 
-    def __new__(cls, bases, name, attrs):
+    def __new__(cls, name, bases, attrs):
         print("__new__ method in metaclass")
-        return type.__new__(cls, bases, name, attrs)
+        print("cls:", cls)
+        print("name: ", name)
+        print("attrs: ", str(attrs))
+        return type.__new__(cls, name, bases, attrs)
 
-    def __init__(self):
-        print("not much to init")
 
 class TestClass(object, metaclass = TestMetaClass):
-    pass
-tc = TestClass()
+
+    def ___init__(self,a,b,c):
+        pass
+    df = 1
+
+    def sd(self):
+        print("sd")
+
+class ChildClass(TestClass):
+    ed = 1
+
+# 当子类继承时，metaclass的__new__方法会执行两遍
+t = ChildClass()
