@@ -9,15 +9,25 @@
 
 import inspect
 
-def func(a, *args,b, **kw):
+def func(a, *, b,c) -> str:
+    return 1
+
+def has_request_arg(fn):
+     sig = inspect.signature(fn)
+     params = sig.parameters
+     found = False
+     for name, param in params.items():
+         print("loop")
+         if name == 'request':
+             print("request")
+             found = True
+             continue
+         if found and (param.kind != inspect.Parameter.VAR_POSITIONAL and param.     kind != inspect.Parameter.KEYWORD_ONLY and param.kind != inspect.Parameter.         VAR_KEYWORD):
+             raise ValueError('request parameter must be the last named parameter    in function: %s%s' % (fn.__name__, str(sig)))
+     return found
+
+def fun(request, *, name, summary, content):
     pass
 
-a = inspect.signature(func)
+print(has_request_arg(fun))
 
-params = a.parameters
-
-print(str(params))
-
-for k, v in params.items():
-    kind = v.kind
-    print("%s: %s-> %s" % (k, v, kind))
