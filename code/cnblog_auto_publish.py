@@ -11,6 +11,7 @@ import time
 import ssl
 import os
 import sys
+import argparse
 # Have no idea about this line.
 ssl._create_default_https_context = ssl._create_unverified_context
 
@@ -19,10 +20,13 @@ server = None
 metablog = None
 title2id = {}
 recent_num = 99999
-debug = True
+debug = False
 
 # read configuration from json file.
 def get_cfg(config):
+    if not os.path.exists(config):
+        print("configuration json file not found!")
+        sys.exit()
     global url, appkey, blogid, usr, passwd, server, metablog
     with open(config, "r", encoding = "utf-8") as f:
         cfg = json.load(f)
@@ -56,42 +60,32 @@ def get_cfg(config):
     if debug:
         print("post type: ", type(recent_post[0]))
     for post in recent_post:
-        # 1. transfer datetime into string
-        dt = post["dateCreated"]
-        post["dateCreated"] = dt.__str__()
         title2id[post["title"]] = post["postid"]
     if debug:
         print("title2id: ", title2id)
 
-def get_newpost_id(post, publish):
-    while True:
-        try:
-            postid = metablog.newPost(blogid, usr, passwd, post, publish)
-            break
-        except:
-            time.sleep(5)
-    return postid
-
-def post_article(path, publish = True):
-    title = os.path.basename(path) # get file name for article name.
-    [title, _] = os.path.splitext(title)
+def post_article(path, publish, category, title):
+    if not title:
+        title = os.path.basename(path) # get file name for article name.
+        [title, _] = os.path.splitext(title)
     if debug:
         print("title: ", title)
     with open(path, "r", encoding = "utf-8") as f:
         post = dict(description = f.read(), title = title)
         post["categories"] = ["[Markdown]"]
+        if category:
+            category = "[随笔分类]" + category
+            post['categories'].append(category)
         if not publish:
             pass
         else:
             # check if the article was already published
             if title in title2id.keys():
                 metablog.editPost(title2id[title], usr, passwd, post, publish)
-                print("Update: [title = %s][postid = %s][publish = %r]" % (title, title2id[title], publish))
                 return (title, title2id[title], publish)
 
             else:
                 postid = new_post(blogid, usr, passwd, post, publish)
-                print("New: [title = %s][postid = %s][publish = %r]" % (title, title2id[title], publish))
                 return (title, postid, publish)
 
 def new_post(blogid, usr, passwd, post, publish):
@@ -104,7 +98,14 @@ def new_post(blogid, usr, passwd, post, publish):
     return postid
 
 if __name__ == "__main__":
-    get_cfg("config.json")
-    # temporarily only receive a file name as an argument.
-    mdfile = sys.argv[1]
-    post_article(mdfile, True)
+    # parse arguments
+    parser = argparse.ArgumentParser(description = "Arguments parser for the program")
+    parser.add_argument("--file", "-p", help = "markdown file path, required", required = True)
+    parser.add_argument("--category", "-c", help = "categories, not required, default: 未分类", default = None)
+    parser.add_argument("--config", "-f", help="config file path", default="/home/lunar/python/code/config.json")
+    parser.add_argument("--title", "-t", help="title for the article, default: the filename of the article. 当标题中存在空格时需要使用反斜杠转义", default=None)
+    args = parser.parse_args()
+
+    get_cfg(args.config)
+    post_article(args.file, True, args.category, args.title)
+    print("Article posted successfully!")
