@@ -82,11 +82,9 @@ def post_article(path, publish, category, title):
             # check if the article was already published
             if title in title2id.keys():
                 metablog.editPost(title2id[title], usr, passwd, post, publish)
-                return (title, title2id[title], publish)
-
             else:
                 postid = new_post(blogid, usr, passwd, post, publish)
-                return (title, postid, publish)
+    print("Article %s posted successfully!" % (title))
 
 def new_post(blogid, usr, passwd, post, publish):
     while True:
@@ -101,11 +99,10 @@ if __name__ == "__main__":
     # parse arguments
     parser = argparse.ArgumentParser(description = "Arguments parser for the program")
     parser.add_argument("--file", "-p", help = "markdown file path, required", required = True)
-    parser.add_argument("--category", "-c", help = "categories, not required, default: 未分类", default = None)
-    parser.add_argument("--config", "-f", help="config file path", default="/home/lunar/python/code/config.json")
-    parser.add_argument("--title", "-t", help="title for the article, default: the filename of the article. 当标题中存在空格时需要使用反斜杠转义", default=None)
+    parser.add_argument("--category", "-c", help = "categories, optional, default: 未分类", default = None)
+    parser.add_argument("--config", "-f", help="config file path, optional, but you need to set default config file path in the source code if you don't want to put it in the command.", default="/home/lunar/python/code/config.json")
+    parser.add_argument("--title", "-t", help="title for the article, optional, default: the filename of the article. You need to use a backslash to escape when there are spaces in the title.", default=None)
     args = parser.parse_args()
 
     get_cfg(args.config)
     post_article(args.file, True, args.category, args.title)
-    print("Article posted successfully!")
