@@ -1,3 +1,24 @@
+### 利用Python从命令行向博客园推送文章
+
+下面的代码可以利用博客园的metawebblog向其推送文章，而不用每次很麻烦的复制文章到浏览器。
+
+首先需要准备一个如下形式的json配置文件：
+
+```json
+{
+    "url": "https://rpc.cnblogs.com/metaweblog/username",
+    "appkey": "username",
+    "usr": "username",
+    "passwd": "pwd",
+}
+```
+配置文件中的`username`都改为你自己的用户名(url最后面的也别忘了)，`pwd`改为密码。
+
+第一次运行本程序可以试一下 `python publish.py -h` 查看每个命令行参数表示什么意思。
+
+然后就可以方便地推送文章到博客园啦！
+
+```python
 # !/usr/bin/env python3
 # -*- coding: utf-8 -*-
 # > Author     : lunar
@@ -109,3 +130,4 @@ if __name__ == "__main__":
 
     get_cfg(args.config)
     post_article(args.file, True, args.category, args.title)
+```
