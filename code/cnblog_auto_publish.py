@@ -64,6 +64,29 @@ def get_cfg(config):
     if debug:
         print("title2id: ", title2id)
 
+# preprocess the article
+def process_article(f):
+    res = list()
+    h1_flag = True
+    yml_flag = False
+    delete_space_line = False
+    for line in f.readlines():
+        if delete_space_line:
+            delete_space_line = False
+            continue
+        if yml_flag and not line.startswith("-"):
+            continue
+        if line.startswith("-"):
+            yml_flag = False if yml_flag else True
+            continue
+        if h1_flag and line.startswith("#") and line[2] != '#':
+            delete_space_line = True
+            h1_flag = False
+            continue
+        res.append(line)
+    res = "".join(res)
+    return res
+
 def post_article(path, publish, category, title):
     if not title:
         title = os.path.basename(path) # get file name for article name.
@@ -71,7 +94,7 @@ def post_article(path, publish, category, title):
     if debug:
         print("title: ", title)
     with open(path, "r", encoding = "utf-8") as f:
-        post = dict(description = f.read(), title = title)
+        post = dict(description = process_article(f), title = title)
         post["categories"] = ["[Markdown]"]
         if category:
             category = "[随笔分类]" + category
