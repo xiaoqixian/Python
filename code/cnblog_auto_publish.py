@@ -106,10 +106,10 @@ def post_article(path, publish, category, title):
             if title in title2id.keys():
                 metablog.editPost(title2id[title], usr, passwd, post, publish)
                 postid = title2id[title]
-                print("Article %s modified successfully!" % (title))
+                print("Article「%s」modified successfully!" % (title))
             else:
                 postid = new_post(blogid, usr, passwd, post, publish)
-                print("Article %s posted successfully!" % (title))
+                print("Article 「%s」posted successfully!" % (title))
     print("Link: https://www.cnblogs.com/%s/p/%s.html" % (appkey, postid))
 
 def new_post(blogid, usr, passwd, post, publish):

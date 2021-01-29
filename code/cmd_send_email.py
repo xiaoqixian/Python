@@ -18,7 +18,6 @@ import xml.dom.minidom
 import argparse
 import os
 
-sender_pwd = "gnznqqejwevkchhj"
 
 # def mail(*file_paths):
     # res = True

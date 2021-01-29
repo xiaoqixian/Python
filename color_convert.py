@@ -9,13 +9,14 @@ import sys
 
 def convert(file_path, color, out):
     img = Image.open(file_path)
+    accuracy = 100
     for i in range(img.size[0]):
         for j in range(img.size[1]):
             pixel = img.getpixel((i,j))
-            if abs(pixel[0] - 11) <= 50 and abs(pixel[1] - 143) <= 50 and abs(pixel[2] - 130) <= 50:
+            if abs(pixel[0] - 11) <= accuracy and abs(pixel[1] - 143) <= accuracy and abs(pixel[2] - 130) <= accuracy:
                 img.putpixel((i,j), color)
     img.save(out)
 
 if __name__ == "__main__":
-    convert(sys.argv[1],(255, 222, 173, 1), sys.argv[2])
+    convert(sys.argv[1],(40, 42, 54, 1), sys.argv[2])
 
