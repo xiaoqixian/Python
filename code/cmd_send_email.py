@@ -18,6 +18,7 @@ import xml.dom.minidom
 import argparse
 import os
 
+sender_pwd = "cpponeubbcsucjji"
 
 # def mail(*file_paths):
     # res = True
@@ -79,7 +80,7 @@ if __name__ == "__main__":
     parser.add_argument("--fr", "-f", help = "sender name, default: sender email address", default = None)
     parser.add_argument("--to", '-t', help = "receiver name, default: receiver email address", default = None)
     parser.add_argument("--address", "-d", help = "receivers email addresses the email sent to. Multiple addresses separate with comma.", default = "lunar_ubuntu@qq.com")
-    parser.add_argument("--sender", "-s", help = "sender email address", default = "lunar_arch@qq.com")
+    parser.add_argument("--sender", "-s", help = "sender email address", default = "lunar_debian@qq.com")
     parser.add_argument("--attachment", "-a", help = "attachment file(s), multiple files separate with comma", default = None)
     parser.add_argument("--subject", "-j", help = "subject", default = None)
     args = parser.parse_args()

@@ -1,0 +1,190 @@
+var posList = [
+    'left', 'right', 'top', 'bottom',
+    'inside',
+    'insideTop', 'insideLeft', 'insideRight', 'insideBottom',
+    'insideTopLeft', 'insideTopRight', 'insideBottomLeft', 'insideBottomRight'
+];
+
+app.configParameters = {
+    rotate: {
+        min: -90,
+        max: 90
+    },
+    align: {
+        options: {
+            left: 'left',
+            center: 'center',
+            right: 'right'
+        }
+    },
+    verticalAlign: {
+        options: {
+            top: 'top',
+            middle: 'middle',
+            bottom: 'bottom'
+        }
+    },
+    position: {
+        options: posList.reduce(function (map, pos) {
+            map[pos] = pos;
+            return map;
+        }, {})
+    },
+    distance: {
+        min: 0,
+        max: 100
+    }
+};
+
+app.config = {
+    rotate: 90,
+    align: 'left',
+    verticalAlign: 'middle',
+    position: 'insideBottom',
+    distance: 15,
+    onChange: function () {
+        var labelOption = {
+            normal: {
+                rotate: app.config.rotate,
+                align: app.config.align,
+                verticalAlign: app.config.verticalAlign,
+                position: app.config.position,
+                distance: app.config.distance
+            }
+        };
+        myChart.setOption({
+            series: [{
+                label: labelOption
+            }, {
+                label: labelOption
+            }, {
+                label: labelOption
+            }, {
+                label: labelOption
+            }]
+        });
+    }
+};
+
+
+var labelOption = {
+    show: false,
+    position: app.config.position,
+    distance: app.config.distance,
+    align: app.config.align,
+    verticalAlign: app.config.verticalAlign,
+    rotate: app.config.rotate,
+    formatter: '{c}  {name|{a}}',
+    fontSize: 16,
+    rich: {
+        name: {
+        }
+    }
+};
+
+option = {
+    title: {
+        left: 'center',
+        text: '10号线和8号线人均感染数对比柱状图'
+    },
+    tooltip: {
+        trigger: 'axis',
+        axisPointer: {
+            type: 'shadow'
+        }
+    },
+    legend: {
+        bottom: 10,
+        left: 'center',
+        data: [ '10号线10%戴口罩','8号线10%戴口罩', '10号线50%戴口罩','8号线50%戴口罩', '10号线90%戴口罩','8号线90%戴口罩',]
+    },
+    toolbox: {
+        show: true,
+        orient: 'vertical',
+        left: 'right',
+        top: 'center',
+        feature: {
+            mark: {show: true},
+            dataView: {show: true, readOnly: false},
+            magicType: {show: true, type: ['line', 'bar', 'stack', 'tiled']},
+            restore: {show: true},
+            saveAsImage: {show: true}
+        }
+    },
+    xAxis: [
+        {
+            type: 'category',
+            axisTick: {show: false},
+            data: ['5:30~7:00', '7:00~9:30', '9:30~17:00', '17:00~19:30', '19:30~22:30']
+        }
+    ],
+    yAxis: [
+        {
+            name: '人均感染数',
+            type: 'value'
+        }
+    ],
+    series: [
+        {
+            name: '10号线10%戴口罩',
+            color:'#1E90FF',
+            type: 'bar',
+            barGap: 0,
+            label: labelOption,
+            emphasis: {
+                focus: 'series'
+            },
+            data: [0.5,	2,	0.769230769,	0.75,	1.142857143]
+        },
+        {
+            name: '8号线10%戴口罩',
+            color:'	#87CEFA',
+            type: 'bar',
+            label: labelOption,
+            emphasis: {
+                focus: 'series'
+            },
+            data: [1.14, 2.69, 0.85, 1.3, 1]
+        },
+        {
+            name:  '10号线50%戴口罩',
+            color:'	#32CD32',
+            type: 'bar',
+            label: labelOption,
+            emphasis: {
+                focus: 'series'
+            },
+            data: [0,	1.166666667	,0.52173913	,0.636363636,	0.5]
+        },
+        {
+            name: '8号线50%戴口罩',
+            color:'		#90EE90',
+            type: 'bar',
+            label: labelOption,
+            emphasis: {
+                focus: 'series'
+            },
+            data: [0, 1.86, 0.45, 1, 0.6]
+        },
+        {
+            name: '10号线90%戴口罩',
+            color:'	#FFA500',
+            type: 'bar',
+            label: labelOption,
+            emphasis: {
+                focus: 'series'
+            },
+            data: [0,	0,	0.058823529	,0.2,	0.25]
+        },
+        {
+            name: '8号线90%戴口罩',
+            color:'	#FFDEAD',
+            type: 'bar',
+            label: labelOption,
+            emphasis: {
+                focus: 'series'
+            },
+            data: [0, 0.47, 0.03, 0.4, 0.2]
+        }
+    ]
+};

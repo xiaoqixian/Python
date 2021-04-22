@@ -1,0 +1,81 @@
+option = {
+    title: {
+        left: 'center',
+        text: '不同戴口罩人群占比下单位感染人数变化图'
+    },
+    tooltip: {
+        trigger: 'axis'
+    },
+    legend: {
+        bottom: 10,
+        left: 'center',
+        data: ['10%', '30%', '50%', '70%', '90%'],
+        
+    },
+    grid: {
+        left: '3%',
+        right: '4%',
+        bottom: '10%',
+        containLabel: true
+    },
+    toolbox: {
+        feature: {
+            saveAsImage: {}
+        }
+    },
+    xAxis: {
+        type: 'category',
+        boundaryGap: false,
+        data: ['5:30-7:00', '7:00-9:30', '9:30-17:00', '17:00-19:30', '19:30-22:30']
+    },
+    yAxis: {
+        type: 'value'
+    },
+    series: [
+        {
+            name: '10%',
+            type: 'line',
+            label: {
+                show: true,
+                position: 'top'
+            },
+            data:[1.17,4.80, 2.21,4.63, 1.91]
+        },
+        {
+            name: '30%',
+            type: 'line',
+            label: {
+                show: true,
+                position: 'top'
+            },
+            data: [0.83, 3.67, 1.65,2.5, 1.67]
+        },
+        {
+            name: '50%',
+            type: 'line',
+            label: {
+                show: true,
+                position: 'top'
+            },
+            data: [0.8,2.89, 0.88, 2.13, 1.14]
+        },
+        {
+            name: '70%',
+            type: 'line',
+            label: {
+                show: true,
+                position: 'top'
+            },
+            data: [0, 2.5, 0.31, 1.38, 1.23]
+        },
+        {
+            name: '90%',
+            type: 'line',
+            label: {
+                show: true,
+                position: 'top'
+            },
+            data: [0, 0.67, 0.28, 0.18, 0.25]
+        }
+    ]
+};

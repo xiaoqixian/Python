@@ -1,0 +1,45 @@
+option = {
+    title: {
+        text: '90%健康人戴口罩时8/10号线人均感染数对比'
+    },
+    tooltip: {},
+    legend: {
+        bottom: 10,
+        left: 'center',
+        data: ['10号线', '8号线']
+    },
+    radar: {
+        // shape: 'circle',
+        name: {
+            textStyle: {
+                color: '#fff',
+                backgroundColor: '#999',
+                borderRadius: 3,
+                padding: [3, 5]
+            }
+        },
+        indicator: [
+            { name: '5:30~22:30', max: 2.5},
+            { name: '19:30~22:00', max: 2.5},
+            { name: '17:00~19:30', max: 2.5},
+            { name: '9:30~17:00', max: 2.5},
+            { name: '7:30~9:30', max: 2.5},
+            { name: '5:30~7:30', max: 2.5}
+        ]
+    },
+    series: [{
+        name: '预算 vs 开销（Budget vs spending）',
+        type: 'radar',
+        // areaStyle: {normal: {}},
+        data: [
+            {
+                value: [0.2712, 0.25, 0.375, 0.142857, 0.857143, 0.2],
+                name: '8号线'
+            },
+            {
+                value: [0.09677, 0.25, 0.2, 0.0588, 0, 0],
+                name: '10号线'
+            }
+        ]
+    }]
+};

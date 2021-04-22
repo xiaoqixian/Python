@@ -1,0 +1,81 @@
+option = {
+    title: {
+        left: 'center',
+        text: '10号线不同戴口罩人群占比下单位感染人数变化图'
+    },
+    tooltip: {
+        trigger: 'axis'
+    },
+    legend: {
+        bottom: 10,
+        left: 'center',
+        data: ['10%', '30%', '50%', '70%', '90%'],
+        
+    },
+    grid: {
+        left: '3%',
+        right: '4%',
+        bottom: '10%',
+        containLabel: true
+    },
+    toolbox: {
+        feature: {
+            saveAsImage: {}
+        }
+    },
+    xAxis: {
+        type: 'category',
+        boundaryGap: false,
+        data: ['5:30-7:00', '7:00-9:30', '9:30-17:00', '17:00-19:30', '19:30-22:30']
+    },
+    yAxis: {
+        type: 'value'
+    },
+    series: [
+        {
+            name: '10%',
+            type: 'line',
+            label: {
+                show: true,
+                position: 'top'
+            },
+            data:[1.5, 2.71, 0.94, 1.45, 0.86]
+        },
+        {
+            name: '30%',
+            type: 'line',
+            label: {
+                show: true,
+                position: 'top'
+            },
+            data: [0.5, 1.88, 0.55, 1.25, 0.57]
+        },
+        {
+            name: '50%',
+            type: 'line',
+            label: {
+                show: true,
+                position: 'top'
+            },
+            data: [0, 1.16, 0.52, 0.64, 0.5]
+        },
+        {
+            name: '70%',
+            type: 'line',
+            label: {
+                show: true,
+                position: 'top'
+            },
+            data: [0.17, 1.33, 0.13, 0.36, 0.17]
+        },
+        {
+            name: '90%',
+            type: 'line',
+            label: {
+                show: true,
+                position: 'top'
+            },
+            data: [0.2,0.85,0.14, 0.2, 0.14]
+        }
+    ]
+};

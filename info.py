@@ -6,6 +6,7 @@
 
 import math
 
+
 def cal_entrpy(nums):
     res = 0
     for num in nums:

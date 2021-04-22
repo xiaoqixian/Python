@@ -22,6 +22,8 @@ title2id = {}
 recent_num = 99999
 debug = False
 
+
+
 # read configuration from json file.
 def get_cfg(config):
     if not os.path.exists(config):
