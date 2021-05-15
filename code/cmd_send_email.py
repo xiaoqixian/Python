@@ -18,29 +18,8 @@ import xml.dom.minidom
 import argparse
 import os
 
-sender_pwd = "cpponeubbcsucjji"
-
-# def mail(*file_paths):
-    # res = True
-    # message = MIMEMultipart()
-    # message['From'] = Header("ubuntu",'utf-8')
-    # message['TO'] = Header("windows", 'utf-8')
-    # subject = 'ubuntu send files'
-    # message['Subject'] = Header(subject,'utf-8')
-    # for path in file_paths[0]:
-        # #print("path: %s" % path)
-        # file_name = split_path(path)
-        # #print("file_name: %s" % file_name)
-        # attach = MIMEApplication(open(path,'rb').read())
-        # attach['Content-type'] = 'application/octet-stream'
-        # attach['Content-Disposition'] = 'attachment; filename="' + file_name + '"'
-        # message.attach(attach)
-
-    # server = smtplib.SMTP_SSL("smtp.qq.com", 465)
-    # server.login(sender_acount, sender_pwd)
-    # server.sendmail(sender_acount, receivers, message.as_string())
-    # server.quit()
-    # return res
+#sender_pwd = "cpponeubbcsucjji"
+sender_pwd = "dfkkdelqowouchhj"
 
 def mail(args):
     res = True
@@ -62,12 +41,14 @@ def mail(args):
         f.close()
     message['Subject'] = Header(subject, 'utf-8')
     if args.attachment:
-        files = args.attachment.split(",")
+        files = args.attachment
         for f in files:
             file_name = f.split("/")[-1]
+            #print(file_name)
             attach = MIMEApplication(open(f, 'rb').read())
             attach['Content-type'] = 'application/octet-stream'
-            attach['Content-Disposition'] = 'attachment;filename="' + file_name + '"'
+            #attach['Content-Disposition'] = 'attachment;filename="' + file_name + '"'
+            attach.add_header("Content-Disposition", "attachment", filename=(Header(file_name, "utf-8").encode()))
             message.attach(attach)
     server = smtplib.SMTP_SSL("smtp.qq.com", 465)
     server.login(args.sender, sender_pwd)
@@ -81,12 +62,12 @@ if __name__ == "__main__":
     parser.add_argument("--to", '-t', help = "receiver name, default: receiver email address", default = None)
     parser.add_argument("--address", "-d", help = "receivers email addresses the email sent to. Multiple addresses separate with comma.", default = "lunar_ubuntu@qq.com")
     parser.add_argument("--sender", "-s", help = "sender email address", default = "lunar_debian@qq.com")
-    parser.add_argument("--attachment", "-a", help = "attachment file(s), multiple files separate with comma", default = None)
+    parser.add_argument("--attachment", "-a", help = "attachment file(s), multiple files separate with comma", default = None, nargs = "*")
     parser.add_argument("--subject", "-j", help = "subject", default = None)
     args = parser.parse_args()
 
-    if mail(args):
-        print("successfully send emails")
-    else:
-        print("send email failed")
+    hint = "Email\ Sent\ Successfully" if mail(args) else "Sending\ Email\ Failed"
+    cmd = "notify-send %s -a SendEmail -i /home/lunar/.local/share/icons/BigSur-Originals-Colors-blue/apps/scalable/internet-mail.svg" % hint
+    os.system(cmd)
+
 
