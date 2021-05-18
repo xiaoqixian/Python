@@ -9,8 +9,9 @@
 import argparse
 
 if __name__ == "__main__":
-    parser = argparse.ArgumentParser()
-    parser.add_argument("--address", "-d", help = "address", default = None, nargs='*')
-    args = parser.parse_args()
-
-    print(args.address)
+    path = "/usr/share/applications/mimeinfo.cache"
+    f = open(path)
+    f.readline()
+    for line in f.readlines():
+        print(line.split("=")[0], end=';')
+    print("")
