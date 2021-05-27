@@ -1,2 +1,3 @@
 doc/*
 code/cmd_receiving_mail.py
+code/cmd_send_email.py
